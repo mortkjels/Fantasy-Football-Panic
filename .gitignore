@@ -1,4 +1,4 @@
 .env
 plan.md
 data
-
+__pycache__
