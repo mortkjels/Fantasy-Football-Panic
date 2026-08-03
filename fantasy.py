@@ -18,7 +18,7 @@ def get_fixtures(params):
                         headers=headers,
                         params = params)
     formatted_data = json.dumps(response.json(), indent=4)
-    with open(DATA_DIR / "fixtures.txt", "w", encoding="utf-8") as file:
+    with open(DATA_DIR / "fixtures.json", "w", encoding="utf-8") as file:
         file.write(formatted_data)
     return formatted_data
 
@@ -29,7 +29,7 @@ def get_league_standings(params):
                         headers=headers,
                         params = params)
     formatted_data = json.dumps(response.json(), indent=4)
-    with open(DATA_DIR / "standings.txt", "w", encoding="utf-8") as file:
+    with open(DATA_DIR / "standings.json", "w", encoding="utf-8") as file:
         file.write(formatted_data)
     return formatted_data
 
@@ -40,7 +40,7 @@ def get_injuries(params):
                         headers=headers,
                         params = params)
     formatted_data = json.dumps(response.json(), indent=4)
-    with open(DATA_DIR / "injuries.txt", "w", encoding="utf-8") as file:
+    with open(DATA_DIR / "injuries.json", "w", encoding="utf-8") as file:
         file.write(formatted_data)
     return formatted_data
 
