@@ -55,26 +55,37 @@ def find_gameweek(gameweek):
             y = round.split()[3]
             if y == gameweek:
                 gameweek_found = True
-                print(f'Gameweek found? => {gameweek_found}. It is Gameweek: {y}')
-                break
+                return y
         if gameweek_found == False:
             print(f'Gameweek found? => {gameweek_found}. Premier League has 38 Gameweeks')
-find_gameweek(gameweek="1")
+# find_gameweek(gameweek="1")
 
-# def find_injuries():
-#     find_gameweek()
-#     with open (DATA_DIR / "injuries.json", "r") as file:
-#         z = json.loads(file.read())
-#         info = z["response"]
-#         injuries = []
-#         for items in info:
-#             injury_date = items["fixture"]["date"]
-#             if injury_date >= startdate and injury_date <= enddate:
-#                 injuries.append(items)
-#             else:
-#                 break
-#         print(injuries[0])
+def correlate_gameweek_fixtures():
+    with open (DATA_DIR / "fixtures.json", "r") as file:
+        x = json.loads(file.read())
+        fixtures = x["response"]
+        gameweek_number = find_gameweek(gameweek=str(input("Write a number from 1-38: ")))
+        for ids in fixtures:
+            id = ids["fixture"]["id"]
+            id_gameweek = ids["league"]["round"]
+            z = id_gameweek.split()[3]
+            if gameweek_number == z:
+                return id
 
+# correlate_gameweek_fixtures()
+
+def find_injuries():
+    with open (DATA_DIR / "injuries.json", "r") as file:
+        z = json.loads(file.read())
+        info = z["response"]
+        fixture_id_gameweek = correlate_gameweek_fixtures()
+        for ids in info:
+            injuries_id = ids["fixture"]["id"]
+            player_id = ids["player"]["name"]
+            if fixture_id_gameweek == injuries_id:
+                print(player_id)
+
+find_injuries()
 # get_injuries(params={"season": 2022, "league": 39})
 # get_league_standings(params={"season": 2022, "league": 39})
 # get_fixtures(params={"season": 2022, "league": 39})
