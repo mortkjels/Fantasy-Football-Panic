@@ -45,13 +45,21 @@ API_FANTASY = os.getenv("API_KEY_FANTASY")
 #     return formatted_data
 
 
-def find_gameweek():
+def find_gameweek(gameweek):
     with open (DATA_DIR / "fixtures.json", "r") as file:
         x = json.loads(file.read())
         gameweeks = x["response"]
-        gameweek = {}
+        gameweek_found = False
         for rounds in gameweeks:
             round = rounds["league"]["round"]
+            y = round.split()[3]
+            if y == gameweek:
+                gameweek_found = True
+                print(f'Gameweek found? => {gameweek_found}. It is Gameweek: {y}')
+                break
+        if gameweek_found == False:
+            print(f'Gameweek found? => {gameweek_found}. Premier League has 38 Gameweeks')
+find_gameweek(gameweek="1")
 
 # def find_injuries():
 #     find_gameweek()
