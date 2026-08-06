@@ -15,10 +15,13 @@ API_AGENT = os.getenv("API_KEY_AGENT")
 
 client = genai.Client(api_key=API_AGENT)
 
-injuries = fantasy.find_injuries()
-# def filter_data_before_prompt():
 
-# filter_data_before_prompt()
+def filter_data_before_prompt():
+    injuries = fantasy.find_injuries()
+    injuries.sort()
+    return injuries
+
+print(filter_data_before_prompt())
 
 def analyzing_with_model():
     response = client.models.generate_content(

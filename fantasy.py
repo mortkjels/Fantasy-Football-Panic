@@ -80,10 +80,11 @@ def find_injuries():
         for ids in info:
             injuries_id = ids["fixture"]["id"]
             player_id = ids["player"]["name"]
+            player_team = ids["team"]["name"]
             available_next = ids["player"]["type"]
             injury_type = ids["player"]["reason"]
             if fixture_id_gameweek == injuries_id:
-                injured_players_in_gameweek.append([player_id, injury_type, available_next])
+                injured_players_in_gameweek.append([player_id, player_team, injury_type, available_next])
     return injured_players_in_gameweek
 
 # get_injuries(params={"season": 2022, "league": 39})
