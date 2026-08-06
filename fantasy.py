@@ -58,7 +58,6 @@ def find_gameweek(gameweek):
                 return y
         if gameweek_found == False:
             print(f'Gameweek found? => {gameweek_found}. Premier League has 38 Gameweeks')
-# find_gameweek(gameweek="1")
 
 def correlate_gameweek_fixtures():
     with open (DATA_DIR / "fixtures.json", "r") as file:
@@ -68,24 +67,25 @@ def correlate_gameweek_fixtures():
         for ids in fixtures:
             id = ids["fixture"]["id"]
             id_gameweek = ids["league"]["round"]
-            z = id_gameweek.split()[3]
-            if gameweek_number == z:
+            id_gameweek_split = id_gameweek.split()[3]
+            if gameweek_number == id_gameweek_split:
                 return id
-
-# correlate_gameweek_fixtures()
 
 def find_injuries():
     with open (DATA_DIR / "injuries.json", "r") as file:
         z = json.loads(file.read())
         info = z["response"]
         fixture_id_gameweek = correlate_gameweek_fixtures()
+        injured_players_in_gameweek = []
         for ids in info:
             injuries_id = ids["fixture"]["id"]
             player_id = ids["player"]["name"]
+            available_next = ids["player"]["type"]
+            injury_type = ids["player"]["reason"]
             if fixture_id_gameweek == injuries_id:
-                print(player_id)
+                injured_players_in_gameweek.append([player_id, injury_type, available_next])
+    return injured_players_in_gameweek
 
-find_injuries()
 # get_injuries(params={"season": 2022, "league": 39})
 # get_league_standings(params={"season": 2022, "league": 39})
 # get_fixtures(params={"season": 2022, "league": 39})
