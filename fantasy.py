@@ -89,9 +89,6 @@ def find_injuries():
                 injured_players_in_gameweek.append([player_id, player_team, injury_type, available_next])
         return injured_players_in_gameweek
 
-# Nå får jeg kun skader i kamp 1, jeg får ikke alle skader for alle kampene i runde 1.
-
-
 # get_injuries(params={"season": 2022, "league": 39})
 # get_league_standings(params={"season": 2022, "league": 39})
 # get_fixtures(params={"season": 2022, "league": 39})
