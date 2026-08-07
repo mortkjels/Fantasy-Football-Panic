@@ -18,7 +18,7 @@ API_FANTASY = os.getenv("API_KEY_FANTASY")
 #                         headers=headers,
 #                         params = params)
 #     formatted_data = json.dumps(response.json(), indent=4)
-#     with open(DATA_DIR / "fixtures.json", "w", encoding="utf-8") as file:
+#     with open(DATA_DIR / "fixtures2022.json", "w", encoding="utf-8") as file:
 #         file.write(formatted_data)
 #     return formatted_data
 
@@ -29,7 +29,7 @@ API_FANTASY = os.getenv("API_KEY_FANTASY")
 #                         headers=headers,
 #                         params = params)
 #     formatted_data = json.dumps(response.json(), indent=4)
-#     with open(DATA_DIR / "standings.json", "w", encoding="utf-8") as file:
+#     with open(DATA_DIR / "standings2022.json", "w", encoding="utf-8") as file:
 #         file.write(formatted_data)
 #     return formatted_data
 
@@ -40,13 +40,12 @@ API_FANTASY = os.getenv("API_KEY_FANTASY")
 #                         headers=headers,
 #                         params = params)
 #     formatted_data = json.dumps(response.json(), indent=4)
-#     with open(DATA_DIR / "injuries.json", "w", encoding="utf-8") as file:
+#     with open(DATA_DIR / "injuries2022.json", "w", encoding="utf-8") as file:
 #         file.write(formatted_data)
 #     return formatted_data
 
-
 def find_gameweek(gameweek):
-    with open (DATA_DIR / "fixtures.json", "r") as file:
+    with open (DATA_DIR / "fixtures2022.json", "r") as file:
         x = json.loads(file.read())
         gameweeks = x["response"]
         gameweek_found = False
@@ -60,10 +59,10 @@ def find_gameweek(gameweek):
             print(f'Gameweek found? => {gameweek_found}. Premier League has 38 Gameweeks')
 
 def correlate_gameweek_fixtures():
-    with open (DATA_DIR / "fixtures.json", "r") as file:
+    with open (DATA_DIR / "fixtures2022.json", "r") as file:
         x = json.loads(file.read())
         fixtures = x["response"]
-        gameweek_number = find_gameweek(gameweek=str(input("Write a number from 1-38: ")))
+        gameweek_number = find_gameweek(gameweek=str(input("Hvilken runde ønsker du info fra? Trenger kun tallet. ")))
         fixtures_gameweek = []
         for ids in fixtures:
             id = ids["fixture"]["id"]
@@ -74,7 +73,7 @@ def correlate_gameweek_fixtures():
         return fixtures_gameweek
 
 def find_injuries():
-    with open (DATA_DIR / "injuries.json", "r") as file:
+    with open (DATA_DIR / "injuries2022.json", "r") as file:
         z = json.loads(file.read())
         info = z["response"]
         fixture_id_gameweek = correlate_gameweek_fixtures()
@@ -92,6 +91,14 @@ def find_injuries():
 # get_injuries(params={"season": 2022, "league": 39})
 # get_league_standings(params={"season": 2022, "league": 39})
 # get_fixtures(params={"season": 2022, "league": 39})
+
+# get_injuries(params={"season": 2023, "league": 39})
+# get_league_standings(params={"season": 2023, "league": 39})
+# get_fixtures(params={"season": 2023, "league": 39})
+
+# get_injuries(params={"season": 2024, "league": 39})
+# get_league_standings(params={"season": 2024, "league": 39})
+# get_fixtures(params={"season": 2024, "league": 39})
 
 
 #Seasons available: 2022, 2023, 2024

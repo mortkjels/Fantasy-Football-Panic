@@ -12,10 +12,21 @@ API_AGENT = os.getenv("API_KEY_AGENT")
 
 client = genai.Client(api_key=API_AGENT)
 
+def question_to_parse():
+    question = input("Hva vil du vite? ")
+
+    query = client.models.generate_content(
+        model="gemma-4-31b-it", 
+        contents=[f'{question}', 'Gi meg svaret jeg gir på dette formatet, som et dictionary: season: x, gameweek: y, request: z. '] )
+    return query.text
+
+print(question_to_parse())
+
 def analyzing_with_model():
-    injuries = fantasy.find_injuries()
+    info = question_to_parse()
     response = client.models.generate_content(
         model="gemma-4-31b-it", 
-        contents=[f'{injuries}', "Hvilke skader skjedde denne runden av sesongen i PL? Gi meg en oppsummering på spiller, skade, potensiell lengde på skade og hvilket lag."] )
+        contents=[f'{""}'] )
 
     return response.text
+
