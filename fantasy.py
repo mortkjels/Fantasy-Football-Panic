@@ -89,7 +89,6 @@ def find_injuries():
                 injured_players_in_gameweek.append([player_id, player_team, injury_type, available_next])
         return injured_players_in_gameweek
 
-print(find_injuries())
 # Nå får jeg kun skader i kamp 1, jeg får ikke alle skader for alle kampene i runde 1.
 
 
