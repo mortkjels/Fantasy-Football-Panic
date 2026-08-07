@@ -64,12 +64,14 @@ def correlate_gameweek_fixtures():
         x = json.loads(file.read())
         fixtures = x["response"]
         gameweek_number = find_gameweek(gameweek=str(input("Write a number from 1-38: ")))
+        fixtures_gameweek = []
         for ids in fixtures:
             id = ids["fixture"]["id"]
             id_gameweek = ids["league"]["round"]
             id_gameweek_split = id_gameweek.split()[3]
             if gameweek_number == id_gameweek_split:
-                return id
+                fixtures_gameweek.append(id)
+        return fixtures_gameweek
 
 def find_injuries():
     with open (DATA_DIR / "injuries.json", "r") as file:
@@ -83,9 +85,13 @@ def find_injuries():
             player_team = ids["team"]["name"]
             available_next = ids["player"]["type"]
             injury_type = ids["player"]["reason"]
-            if fixture_id_gameweek == injuries_id:
+            if injuries_id in fixture_id_gameweek:
                 injured_players_in_gameweek.append([player_id, player_team, injury_type, available_next])
-    return injured_players_in_gameweek
+        return injured_players_in_gameweek
+
+print(find_injuries())
+# Nå får jeg kun skader i kamp 1, jeg får ikke alle skader for alle kampene i runde 1.
+
 
 # get_injuries(params={"season": 2022, "league": 39})
 # get_league_standings(params={"season": 2022, "league": 39})
