@@ -17,9 +17,14 @@ def question_to_parse():
 
     query = client.models.generate_content(
         model="gemma-4-31b-it", 
-        contents=[f'{question}', 'Gi meg svaret jeg gir på dette formatet, som et json-format: {"season": x, "gameweek": y, "request": z.} Request er typ da injuries, transfers, etc. Hva man spør etter'] )
+        contents=[f'{question}', 'Uavhengig av hvordan spørsmålet er formulert, '
+        'så skal du hente ut infoen som sesong, runde og request (skader, overganger etc), som et '
+        'json-format. Jeg skal kun ha output fra deg som dette'
+        '{"season": x, "gameweek": y, "request": z.}. '
+        'Request kan komme på norsk, men returner i formatet på engelsk'] )
     output = query.text
     plain_text = output.split("\n")
+    print(plain_text)
     plain_text_to_json = json.loads(plain_text[1])
     return plain_text_to_json
 
