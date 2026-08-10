@@ -26,17 +26,15 @@ def question_to_parse():
 parsed_question = question_to_parse()
 
 filename, gameweek = fantasy.find_correct_file(parsed_question)
-print(filename, gameweek)
 
 injuries = fantasy.find_injuries(filename, gameweek)
 
-print(injuries)
-
 def analyzing_with_model():
-    info = question_to_parse()
     response = client.models.generate_content(
         model="gemma-4-31b-it", 
-        contents=[f'{""}'] )
+        contents=[f'{injuries}','Oppsummer dette til et leselig og pent format slik at jeg kan ha kontroll over byttene mine for neste runde i FPL. Jeg ønsker at du tar for deg alle lag.'] )
 
     return response.text
+
+print(analyzing_with_model())
 
