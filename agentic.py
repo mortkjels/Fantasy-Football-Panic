@@ -25,12 +25,12 @@ def question_to_parse():
 
 parsed_question = question_to_parse()
 
-filename = fantasy.find_correct_file(parsed_question)
-print(filename)
+filename, gameweek = fantasy.find_correct_file(parsed_question)
+print(filename, gameweek)
 
-gameweek = fantasy.find_injuries(filename)
+injuries = fantasy.find_injuries(filename, gameweek)
 
-print(gameweek)
+print(injuries)
 
 def analyzing_with_model():
     info = question_to_parse()

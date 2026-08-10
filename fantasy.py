@@ -49,12 +49,11 @@ def find_correct_file(data):
     request = data["request"]
     gameweek = data["gameweek"]
     file_to_choose = f"{request}{season}.json"
-    return file_to_choose
-
-# injuries2022.json --> fixtures2022.json --> request byttes med fixtures
+    return file_to_choose, gameweek
 
 def find_gameweek(gameweek, filename):
     new_file = filename.replace("injuries", "fixtures")
+    intended_gameweek = gameweek
     with open (DATA_DIR / new_file, "r") as file:
         x = json.loads(file.read())
         gameweeks = x["response"]
@@ -62,18 +61,19 @@ def find_gameweek(gameweek, filename):
         for rounds in gameweeks:
             round = rounds["league"]["round"]
             y = round.split()[3]
-            if y == gameweek:
+            if y == str(intended_gameweek):
                 gameweek_found = True
                 return y
         if gameweek_found == False:
             print(f'Gameweek found? => {gameweek_found}. Premier League has 38 Gameweeks')
 
-def correlate_gameweek_fixtures(filename):
+def correlate_gameweek_fixtures(filename, gameweek):
     new_file = filename.replace("injuries", "fixtures")
+    intended_gameweek = gameweek
     with open (DATA_DIR / new_file, "r") as file:
         x = json.loads(file.read())
         fixtures = x["response"]
-        gameweek_number = find_gameweek(gameweek=str(input("Hvilken runde ønsker du info fra? Trenger kun tallet. ")), filename=new_file)
+        gameweek_number = find_gameweek(gameweek=intended_gameweek, filename=new_file)
         fixtures_gameweek = []
         for ids in fixtures:
             id = ids["fixture"]["id"]
@@ -83,11 +83,11 @@ def correlate_gameweek_fixtures(filename):
                 fixtures_gameweek.append(id)
         return fixtures_gameweek
 
-def find_injuries(filename):
+def find_injuries(filename, gameweek):
     with open (DATA_DIR / filename, "r") as file:
         z = json.loads(file.read())
         info = z["response"]
-        fixture_id_gameweek = correlate_gameweek_fixtures(filename)
+        fixture_id_gameweek = correlate_gameweek_fixtures(filename, gameweek)
         injured_players_in_gameweek = []
         for ids in info:
             injuries_id = ids["fixture"]["id"]
