@@ -95,6 +95,22 @@ def correlate_gameweek_fixtures(filename, gameweek):
                 fixtures_gameweek.append(id)
         return fixtures_gameweek
 
+def matches_that_gameweek(filename, gameweek):
+    new_file = filename.replace("injuries", "fixtures")
+    intended_gameweek = gameweek
+    with open (DATA_DIR / new_file, "r") as file:
+        x = json.loads(file.read())
+        fixtures = x["response"]
+        matches = []
+        match_ids = correlate_gameweek_fixtures(new_file, intended_gameweek)
+        for ids in fixtures:
+            id = ids["fixture"]["id"]
+            home_team = ids["teams"]["home"]["name"]
+            away_team = ids["teams"]["away"]["name"]
+            if id in match_ids:
+                matches.append([home_team, "vs", away_team])
+    return matches
+
 def find_injuries(filename, gameweek):
     with open (DATA_DIR / filename, "r") as file:
         z = json.loads(file.read())
