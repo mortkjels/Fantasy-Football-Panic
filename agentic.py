@@ -41,14 +41,3 @@ def analyzing_with_model():
     return response.text
 
 print(analyzing_with_model())
-
-
-# Ikke godkjent
-# Hvilke spillere var ute i åpningsrunden 2023?
-
-# Godkjent 
-# Skader i runde 1 i 2022
-# Hvem var skadet i første runde i 2022?
-# Skader PL GW 1 2022
-# Skader fra gameweek 20 i 2024
-
